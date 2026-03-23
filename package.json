@@ -1,0 +1,30 @@
+{
+  "name": "permission-access-system",
+  "version": "0.1.0",
+  "description": "Reusable permission access system for Node.js and TypeScript apps.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit"
+  },
+  "keywords": [
+    "authorization",
+    "rbac",
+    "permissions",
+    "access-control",
+    "typescript"
+  ],
+  "license": "MIT"
+}
