@@ -13,11 +13,25 @@
   },
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "docs"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "check": "tsc -p tsconfig.json --noEmit"
+    "check": "tsc -p tsconfig.json --noEmit",
+    "prepare": "npm run build",
+    "test": "npm run build && node --test test/**/*.test.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/viven1426/permission-access-system.git"
+  },
+  "homepage": "https://github.com/viven1426/permission-access-system",
+  "bugs": {
+    "url": "https://github.com/viven1426/permission-access-system/issues"
   },
   "keywords": [
     "authorization",
@@ -26,5 +40,8 @@
     "access-control",
     "typescript"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
 }
