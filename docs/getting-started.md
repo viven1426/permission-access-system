@@ -37,6 +37,18 @@ npm install github:viven1426/permission-access-system
 
 This approach is useful when you want to consume it inside another Node.js application.
 
+## Import Style
+
+This project currently uses an ESM package interface.
+
+Use imports like:
+
+```ts
+import { createAccessControl } from "permission-access-system";
+```
+
+If your application is still CommonJS-only, clone the repository and adapt it locally instead of installing it as a package dependency.
+
 ## Basic Example
 
 ```ts
@@ -213,3 +225,5 @@ The repository also includes runnable example source files in:
 - `src/examples/crm-example.ts`
 
 For a breakdown of what each example demonstrates, see `docs/examples.md`.
+
+For the public API details and decision structure, see `docs/api.md`.

@@ -18,6 +18,7 @@ Detailed usage documentation is available in:
 - `docs/getting-started.md`
 - `docs/use-cases.md`
 - `docs/examples.md`
+- `docs/api.md`
 
 ## What This Project Is
 
@@ -134,6 +135,59 @@ This approach is useful when a team wants:
 - to reuse the project as a dependency
 - to keep updates connected to the GitHub repository
 - to integrate it into another Node.js application
+
+## Public API
+
+The package currently exposes:
+
+- `createAccessControl`
+- `isAllowed`
+- `resolveUserPermissions`
+
+Main usage:
+
+```ts
+import { createAccessControl } from "permission-access-system";
+
+const accessControl = createAccessControl({
+  admin: {
+    permissions: [{ resource: "project", action: "read", scope: "any" }]
+  }
+});
+
+const decision = accessControl.can({
+  user: {
+    id: "user_1",
+    roleKeys: ["admin"]
+  },
+  resource: "project",
+  action: "read"
+});
+```
+
+Decision shape:
+
+```ts
+{
+  allowed: true,
+  reason: "Access allowed.",
+  matchedScopes: ["any"]
+}
+```
+
+For the full API contract, see `docs/api.md`.
+
+## Compatibility
+
+The current package interface is ESM-based.
+
+Use:
+
+```ts
+import { createAccessControl } from "permission-access-system";
+```
+
+If your app is CommonJS-only, the safer approach for now is to clone the repository and adapt it inside your project.
 
 ## How This Project Is Typically Used
 
