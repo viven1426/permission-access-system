@@ -66,10 +66,30 @@ Recommended:
 const accessControl = createAccessControl(roleConfig);
 ```
 
+You can also load the same engine from a JSON file:
+
+```ts
+const accessControl = createAccessControl("./rules.json");
+```
+
 Equivalent class-based form:
 
 ```ts
 const accessControl = new AccessControlEngine(roleConfig);
+```
+
+Example `rules.json`:
+
+```json
+{
+  "roles": {
+    "manager": {
+      "permissions": [
+        { "resource": "lead", "action": "read", "scope": "team" }
+      ]
+    }
+  }
+}
 ```
 
 ## 5. Run A Permission Check
@@ -149,6 +169,7 @@ Before using this package in an app, decide:
 3. which roles exist
 4. whether each resource uses `any`, `own`, or `team` scope
 5. whether any actions need conditional deny rules
+6. whether rules will live in code or in `rules.json`
 
 ## Common Patterns
 
@@ -187,6 +208,23 @@ Conditional deny:
   scope: "any",
   effect: "deny",
   condition: ({ resource }) => resource?.status === "locked"
+}
+```
+
+JSON-based conditional deny:
+
+```json
+{
+  "resource": "invoice",
+  "action": "refund",
+  "scope": "any",
+  "effect": "deny",
+  "condition": {
+    "source": "resource",
+    "field": "status",
+    "operator": "equals",
+    "value": "locked"
+  }
 }
 ```
 

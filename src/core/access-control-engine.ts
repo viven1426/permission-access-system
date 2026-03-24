@@ -1,10 +1,12 @@
 import type {
   AccessCheck,
   AccessControl,
+  AccessControlConfigInput,
   AccessDecision,
   PermissionGrant,
   RoleDefinition
 } from "../types/access-control.js";
+import { loadRoleDefinitions } from "./config-loader.js";
 import { isAllowed } from "./evaluator.js";
 import { resolveUserPermissions } from "./resolver.js";
 import { validateRoleDefinitions } from "./validator.js";
@@ -29,7 +31,18 @@ export class AccessControlEngine implements AccessControl {
 }
 
 export function createAccessControl(
-  roles: Record<string, RoleDefinition>
+  input: string
+): AccessControlEngine;
+
+export function createAccessControl(
+  input:
+    | Record<string, RoleDefinition>
+    | Record<string, import("../types/access-control.js").JsonRoleDefinition>
+    | import("../types/access-control.js").JsonAccessControlConfig
+): AccessControlEngine;
+
+export function createAccessControl(
+  input: AccessControlConfigInput
 ): AccessControlEngine {
-  return new AccessControlEngine(roles);
+  return new AccessControlEngine(loadRoleDefinitions(input));
 }

@@ -20,6 +20,14 @@ import { createAccessControl } from "permission-access-system";
 const accessControl = createAccessControl(roleConfig);
 ```
 
+JSON file form:
+
+```ts
+import { createAccessControl } from "permission-access-system";
+
+const accessControl = createAccessControl("./rules.json");
+```
+
 Class form:
 
 ```ts
@@ -29,6 +37,11 @@ const accessControl = new AccessControlEngine(roleConfig);
 ```
 
 Both give you the same engine behavior.
+
+`createAccessControl(...)` accepts:
+
+- a role configuration object
+- a JSON file path
 
 ## Engine Methods
 
@@ -90,6 +103,36 @@ Example:
   condition: ({ resource }) => resource?.status === "locked"
 }
 ```
+
+## JSON Permission Grant
+
+When rules come from `rules.json`, conditions must be declarative.
+
+Example:
+
+```json
+{
+  "resource": "invoice",
+  "action": "refund",
+  "scope": "any",
+  "effect": "deny",
+  "condition": {
+    "source": "resource",
+    "field": "status",
+    "operator": "equals",
+    "value": "locked"
+  }
+}
+```
+
+Supported JSON condition operators:
+
+- `equals`
+- `notEquals`
+- `in`
+- `notIn`
+- `exists`
+- `notExists`
 
 ## Scopes
 

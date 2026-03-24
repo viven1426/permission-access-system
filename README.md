@@ -52,6 +52,31 @@ const decision = accessControl.can({
 });
 ```
 
+## JSON Rules
+
+You can also point the same engine API at a JSON file:
+
+```ts
+import { createAccessControl } from "permission-access-system";
+
+const accessControl = createAccessControl("./rules.json");
+```
+
+Example `rules.json`:
+
+```json
+{
+  "roles": {
+    "manager": {
+      "permissions": [
+        { "resource": "lead", "action": "read", "scope": "team" },
+        { "resource": "lead", "action": "update", "scope": "team" }
+      ]
+    }
+  }
+}
+```
+
 ## Installation
 
 Clone the repository:

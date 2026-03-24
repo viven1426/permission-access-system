@@ -1,0 +1,34 @@
+{
+  "roles": {
+    "manager": {
+      "permissions": [
+        {
+          "resource": "lead",
+          "action": "read",
+          "scope": "team"
+        }
+      ]
+    },
+    "billing_admin": {
+      "permissions": [
+        {
+          "resource": "invoice",
+          "action": "refund",
+          "scope": "any"
+        },
+        {
+          "resource": "invoice",
+          "action": "refund",
+          "scope": "any",
+          "effect": "deny",
+          "condition": {
+            "source": "resource",
+            "field": "status",
+            "operator": "equals",
+            "value": "locked"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -129,3 +129,44 @@ test("throws when role inheritance is circular", () => {
     /Circular role inheritance detected/
   );
 });
+
+test("creates access control from a json file path", () => {
+  const accessControl = createAccessControl(
+    new URL("./fixtures/rules.json", import.meta.url).pathname
+  );
+
+  const decision = accessControl.can({
+    user: {
+      id: "manager_1",
+      roleKeys: ["manager"],
+      teamIds: ["team_west"]
+    },
+    resource: "lead",
+    action: "read",
+    resourceTeamId: "team_west"
+  });
+
+  assert.equal(decision.allowed, true);
+});
+
+test("json declarative conditions deny locked invoices", () => {
+  const accessControl = createAccessControl(
+    new URL("./fixtures/rules.json", import.meta.url).pathname
+  );
+
+  const decision = accessControl.can({
+    user: {
+      id: "finance_1",
+      roleKeys: ["billing_admin"]
+    },
+    resource: "invoice",
+    action: "refund",
+    resourceData: {
+      id: "inv_1",
+      status: "locked"
+    }
+  });
+
+  assert.equal(decision.allowed, false);
+  assert.equal(decision.reason, "Access denied by an explicit deny rule.");
+});
