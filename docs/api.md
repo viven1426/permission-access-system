@@ -21,9 +21,11 @@ If your application is still CommonJS-based, you should either:
 
 The package exposes:
 
+- `AccessControlEngine`
 - `createAccessControl`
 - `isAllowed`
 - `resolveUserPermissions`
+- `requirePermission`
 
 ## createAccessControl
 
@@ -41,6 +43,30 @@ The returned object includes:
 
 - `can(check)`
 - `getPermissions(roleKeys)`
+
+Internally, `createAccessControl(...)` returns an `AccessControlEngine` instance.
+
+## AccessControlEngine
+
+This is the class-based engine that owns the role configuration and exposes the main authorization API.
+
+Example:
+
+```ts
+import { AccessControlEngine } from "permission-access-system";
+
+const accessControl = new AccessControlEngine({
+  admin: {
+    permissions: [{ resource: "project", action: "read", scope: "any" }]
+  }
+});
+```
+
+Main methods:
+
+- `can(check)`
+- `getPermissions(roleKeys)`
+- `getRoles()`
 
 ## accessControl.can(check)
 
@@ -145,3 +171,9 @@ It throws errors when:
 - role inheritance is circular
 
 This helps catch configuration problems early instead of failing silently during authorization checks.
+
+## Express Adapter
+
+The package also exposes `requirePermission` as an adapter helper for request middleware use cases.
+
+For integration details, see `docs/middleware-integration.md`.

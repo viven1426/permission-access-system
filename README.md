@@ -84,9 +84,11 @@ Use this when you want:
 
 The package currently exposes:
 
+- `AccessControlEngine`
 - `createAccessControl`
 - `isAllowed`
 - `resolveUserPermissions`
+- `requirePermission`
 
 Basic usage:
 

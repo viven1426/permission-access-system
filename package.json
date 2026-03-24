@@ -17,7 +17,7 @@
     "docs"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "rm -rf dist && tsc -p tsconfig.json",
     "check": "tsc -p tsconfig.json --noEmit",
     "prepare": "npm run build",
     "test": "npm run build && node --test test/**/*.test.mjs"
